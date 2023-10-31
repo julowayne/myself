@@ -39,9 +39,9 @@ export default {
   data: () => ({
     character: "",
     realm: "",
-    namespace: "profile-eu",
-    locale: "en_EU",
-    region: "eu",
+    namespace: import.meta.env.VITE_WOW_NAMESPACE,
+    locale: import.meta.env.VITE_WOW_LOCALE,
+    region: import.meta.env.VITE_WOW_REGION,
     assets: [],
     firstProfession: [],
     seCondProfession: [],
@@ -55,10 +55,8 @@ export default {
     },
     getCharacterProfessions(){
       axios.get(`https://${this.region}.api.blizzard.com/profile/wow/character/${this.realm}/${this.character}/professions?namespace=${this.namespace}&locale=${this.locale}&access_token=${this.token}`).then(resp => {
-        console.log(resp.data);
         this.firstProfession = resp.data.primaries[0].profession.name
         this.seCondProfession = resp.data.primaries[1].profession.name
-        console.log("professions : " + this.firstProfession + " and " + this.seCondProfession);
       });
     },
     getCharacterInformations(){
