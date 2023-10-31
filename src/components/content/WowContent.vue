@@ -42,10 +42,12 @@ export default {
     namespace: import.meta.env.VITE_WOW_NAMESPACE,
     locale: import.meta.env.VITE_WOW_LOCALE,
     region: import.meta.env.VITE_WOW_REGION,
+    token: import.meta.env.VITE_API_TOKEN,
     assets: [],
     firstProfession: [],
     seCondProfession: [],
-    token: import.meta.env.VITE_API_TOKEN
+    statistics: [],
+    basicsInformations: []
   }),
   methods: {
     getCharacterRender(){
@@ -59,6 +61,21 @@ export default {
         this.seCondProfession = resp.data.primaries[1].profession.name
       });
     },
+    getCharacterStats(){
+      axios.get(`https://${this.region}.api.blizzard.com/profile/wow/character/${this.realm}/${this.character}/statistics?namespace=${this.namespace}&locale=${this.locale}&access_token=${this.token}`).then(resp => {
+        // TODO
+        console.log(resp.data)
+        // this.statistics = ""
+      });
+    },
+    getCharacterBasicInformations(){
+      axios.get(`https://${this.region}.api.blizzard.com/profile/wow/character/${this.realm}/${this.character}?namespace=${this.namespace}&locale=${this.locale}&access_token=${this.token}`).then(resp => {
+        // TODO
+        console.log(resp.data)
+        // this.statistics = ""
+      });
+    },
+
     getCharacterInformations(){
       this.getCharacterRender(),
       this.getCharacterProfessions()
