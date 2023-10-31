@@ -15,11 +15,15 @@
       </li>
       <li>
         <CommunityIcon />
-        <router-link to="/wow">World of warcraft</router-link>
+        <router-link to="/wow">WoW</router-link>
       </li>
       <li>
         <SupportIcon />
         <router-link to="/projects">Projets</router-link>
+      </li>
+      <li>
+        <SupportIcon />
+        <router-link to="/weather">Météo</router-link>
       </li>
     </ul>
   </div>

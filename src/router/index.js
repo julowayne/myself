@@ -4,6 +4,7 @@ import ProfilContent from "../components/content/ProfilContent.vue";
 import GithubContent from "../components/content/GithubContent.vue";
 import ProjectsContent from "../components/content/ProjectsContent.vue";
 import WowContent from "../components/content/WowContent.vue";
+import WeatherContent from "../components/content/WeatherContent.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/wow",
     name: "World Of Warcraft",
     component: WowContent,
+  },
+  {
+    path: "/weather",
+    name: "Météo",
+    component: WeatherContent,
   },
 ];
 
