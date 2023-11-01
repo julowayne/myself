@@ -21,12 +21,11 @@ header {
 
 @media (min-width: 1024px) {
   header .wrapper {
-    min-width: 18vw;
+    min-width: 17vw;
     min-height: 100vh;
-  }
-
-  main {
-    margin-left: 50px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
   }
 }
 </style>

@@ -1,31 +1,44 @@
 <template>
   <div class="content-padding">
-    <h1 class="section-content">
-      World of Warcraft
-    </h1>
-    <div class="form-info">
-      <form @submit.prevent="getCharacterInformations">
-        <div>
-          <label for="character">Character name:</label>
-          <input v-model="character" type="text" placeholder="Enter your character name" id="character" required>
+    <div class="wow">
+      <div class="form">
+        <h1 class="title">
+          World of Warcraft
+        </h1>
+        <div class="form-info">
+          <form @submit.prevent="getCharacterInformations">
+            <div class="inputs">
+              <div>
+                <label for="character">Character name</label>
+              </div>
+              <input v-model="character" type="text" placeholder="ex: hypea" id="character" required>
+            </div>
+            <div>
+              <div>
+                <label for="realm">Realm name</label>
+              </div>
+              <input v-model="realm" type="text" placeholder="ex: hyjal" id="realm" required>
+            </div>
+            <div class="request">
+              <button class="send-btn" type="submit">submit</button>
+            </div>
+          </form>
         </div>
-        <div>
-          <label for="realm">Realm name:</label>
-          <input v-model="realm" type="text" placeholder="Enter your character realm" id="realm" required>
-        </div>
-        <div>
-          <input type="submit" value="submit" />
-        </div>
-      </form>
-    </div>
-    <div v-if="firstProfession.length && seCondProfession.length">
-      <div>
-        This character has {{ firstProfession }} and {{ seCondProfession }}
       </div>
-    </div>
-    <div class="render" v-if="assets.length">
-      <div v-for="asset in assets" :key="asset.avatar">
-        <img v-bind:src="asset.value" alt="character img asset">
+      <div class="results">
+        <div v-if="firstProfession.length && seCondProfession.length">
+          <div>
+            This character has {{ firstProfession }} and {{ seCondProfession }}
+          </div>
+        </div>
+        <div class="render" v-if="assets.length">
+          <!-- <div v-for="asset in assets" :key="asset.avatar">
+            <img v-bind:src="asset.value" alt="character img asset">
+          </div> -->
+          <div>
+            <img v-bind:src="assets[2].value" alt="character img asset">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -87,5 +100,75 @@ export default {
 </script>
 
 <style>
+.wow {
+  width: 80vw;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  color: #0074e0;
+}
+.title {
+  margin-bottom: 15px;
+  text-align: center;
+}
+.form {
+  min-width: 50%;
+  padding: 30px;
+  background-color: #e9ecef;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  border-radius: 4px;
+}
+.form-info {
+  display: flex;
+  justify-content: center;
+  min-width: 50%;
+}
+form {
+  min-width: 50%;
+}
+input {
+  min-width: 100%;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  border: none;
+  border-radius: 4px;
+  height: 30px;
+  padding: 10px;
+}
+input:focus {
+  outline: none !important;
+  border:1px solid hsla(160, 100%, 37%, 1);
+  box-shadow: 0 0 10px #719ECE;
+}
+button {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 4px;
+  background: #495057;
+	color: hsla(160, 100%, 37%, 1);
+	border: none;
+	padding: 5px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+img {
+  max-width: 50%;
+  background-color: #212529;
+  border-radius: 4px;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.render {
+  text-align: center;
+}
+.results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 </style>
