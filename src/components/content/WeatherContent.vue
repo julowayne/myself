@@ -7,6 +7,15 @@
       <div>
         The temperature in {{city}} is {{ temperature }} °c
       </div>
+      <div>
+        <input v-model.trim="searchCity.name" type="text" @keyup.enter="getWeatherByCity" placeholder="Search other cities">
+        <div v-if="searchCity.name && displaySearchResult === true">
+          The temperature in {{searchCity.name}} is {{ searchCity.temperature }} °c
+        </div>
+        <div v-else>
+          {{ errorMsg }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,14 +32,20 @@ const openai = new OpenAI({
 export default {
   name: "WeatherContent",
   data: () => ({
-    city: "",
-    temperature: 0,
     OwApiKey: import.meta.env.VITE_OW_API_KEY,
     OaiApiKey: import.meta.env.VITE_OAI_API_KEY,
+    city: "",
+    temperature: 0,
     latitude: 0,
     longitude: 0,
     weather: "",
     weatherBackground: "",
+    displaySearchResult: false,
+    searchCity: {
+      name: "",
+      temperature: 0
+    },
+    errorMsg: ""
   }),
   methods: {
     getUserPosition(){
@@ -60,6 +75,30 @@ export default {
         this.temperature = Math.round(resp.data.main.temp)
       });
     },
+    getWeatherByCity(){
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.searchCity.name}&appid=${this.OwApiKey}&units=metric`).then(resp => {
+        console.log(resp)
+        console.log(resp.data)
+        console.log(resp.data.main)
+        this.searchCity.name = resp.data.name
+        this.searchCity.temperature = Math.round(resp.data.main.temp)
+
+        if(resp.status === 200) this.displaySearchResult = true
+        
+      }).catch(error => {
+          if (error.response) {
+            console.log(error.response.status);
+            if(error.response.status === 400) this.errorMsg = "The city you are looking for doesn't exist"
+          } else if (error.request) {
+
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        });;
+    },
     generateBackgroundImg(){
       // OPEN AI
       const response = openai.images.generate({
@@ -88,6 +127,6 @@ export default {
   justify-content: center;
   align-items: center;
   align-content: center;
-  border: 1px solid green;
+  /* border: 1px solid green; */
 }
 </style>
