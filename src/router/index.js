@@ -5,6 +5,7 @@ import GithubContent from "../components/content/GithubContent.vue";
 import ProjectsContent from "../components/content/ProjectsContent.vue";
 import WowContent from "../components/content/WowContent.vue";
 import WeatherContent from "../components/content/WeatherContent.vue";
+import WeatherSearch from '../components/content/weather/WeatherSearch.vue';
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     name: "Météo",
     component: WeatherContent,
   },
+  {
+    path: "/weather/search",
+    name: "Search",
+    component: WeatherSearch,
+  }
 ];
 
 const router = createRouter({
