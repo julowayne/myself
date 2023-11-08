@@ -36,7 +36,7 @@
             <img v-bind:src="asset.value" alt="character img asset">
           </div> -->
           <div>
-            <img v-bind:src="assets[2].value" alt="character img asset">
+            <img class="avatar" v-bind:src="assets[2].value" alt="character img asset">
           </div>
         </div>
       </div>
@@ -111,7 +111,6 @@ export default {
   color: #0074e0;
 }
 .title {
-  margin-bottom: 15px;
   text-align: center;
 }
 .form {
@@ -155,7 +154,7 @@ button {
 	outline: inherit;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
-img {
+.avatar {
   max-width: 50%;
   background-color: #212529;
   border-radius: 4px;

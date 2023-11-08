@@ -1,18 +1,21 @@
 <template>
   <div>
-    <tr>
-    <td>
-      {{ day }}
-      {{ weather.temperature }} °
-    </td>
-    <td>
-      <img
-        v-if="weather"
-        :src="weatherImages"
-        alt="weather image"
-      />
-    </td>
-  </tr>
+    <div class="day">
+      <span>
+        {{ day }}
+      </span>
+      <span>
+        {{ weather.temperature }} °
+      </span>
+      <span id="img">
+        <img
+          class="weatherIcon"
+          v-if="weather"
+          :src="weatherImages"
+          alt="weather image"
+        />
+      </span>
+    </div>
   </div>
 </template>
 
@@ -31,7 +34,7 @@ export default {
   computed: {
 
     day() {
-      return dayjs(this.weather.day).format("dddd MMM");
+      return dayjs(this.weather.day).format("dddd MMM")
     },
 
     weatherImages() {
@@ -45,5 +48,35 @@ export default {
 </script>
 
 <style>
+
+.day {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 350px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: #2c3e50;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.day:hover {
+  background-color: #17a2b8;
+}
+
+.day span:first-child {
+  text-align: left;
+  min-width: 130px;
+} 
+
+#img {
+  /* margin-top: 2px; */
+  text-align: center;
+}
+
+.weatherIcon {
+  width: 50%;
+}
 
 </style>

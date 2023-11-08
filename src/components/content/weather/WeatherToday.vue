@@ -1,5 +1,7 @@
 <template>
-  <div>The temperature in {{ city }} is {{ TodayTemperature }} °c</div>
+  <div id="today">
+    The temperature in <span id="city">{{ city }}</span> is {{ TodayTemperature }} °c
+  </div>
 </template>
 
 <script>
@@ -14,4 +16,14 @@ export default {
 </script>
 
 <style>
+
+#today {
+  padding: 20px;
+}
+
+#city {
+  color: white;
+  font-size: bold;
+}
+
 </style>

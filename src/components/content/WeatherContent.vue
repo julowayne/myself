@@ -1,7 +1,7 @@
 <template>
   <div class="content-padding">
     <div class="weather">
-      <h1 class="title">Météo</h1>
+      <h1 class="weather-title">Weather</h1>
       <!-- <WeatherSearch /> -->
       <WeatherToday :TodayTemperature="TodayTemperature" :city="city" />
       <WeatherForecast :weathers="weathers" />
@@ -109,17 +109,16 @@ export default {
 </script>
 
 <style>
-.title {
-  padding: 15px;
+.weather-title {
+  color: #e9ecef;
+  padding: 10px;
 }
 .weather {
   width: 80vw;
   display: flex;
-  padding: 20px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   align-content: center;
-  /* border: 1px solid green; */
 }
 </style>

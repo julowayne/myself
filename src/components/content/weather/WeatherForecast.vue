@@ -1,19 +1,11 @@
 <template>
   <div id="forecast">
-    <table>
-      <thead>
-        <tr>
-          <th colspan="2">Next days</th>
-        </tr>
-      </thead>
-      <tbody>
-        <WeatherForecastDay 
-        v-for="(weather, index) in weathers"
-          :key="index"
-          :weather="weather"
-        />
-      </tbody>
-    </table>
+    <h3 id="nextdays">Next Days</h3>
+    <WeatherForecastDay 
+      v-for="(weather, index) in weathers"
+        :key="index"
+        :weather="weather"
+      />
   </div>
 </template>
 
@@ -37,5 +29,20 @@ export default {
 </script>
 
 <style>
+
+#forecast {
+  display: flex;
+  flex-flow: column;
+  height: 45vh;
+  width: 50vw;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  color: #e9ecef;
+}
+
+#nextdays {
+  margin-bottom: 15px;
+}
 
 </style>
