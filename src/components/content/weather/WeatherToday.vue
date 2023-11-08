@@ -1,19 +1,17 @@
 <template>
-  <div>
-    The temperature in {{ city }} is {{  TodayTemperature }} °c
-  </div>
+  <div>The temperature in {{ city }} is {{ TodayTemperature }} °c</div>
 </template>
 
 <script>
 export default {
-  name: "WeatherToday",
+  name: 'WeatherToday',
+  
   props: {
     city: String,
-    TodayTemperature: Number,
-  },
+    TodayTemperature: Number
+  }
 }
 </script>
 
 <style>
-
 </style>
