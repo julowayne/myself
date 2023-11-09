@@ -1,6 +1,6 @@
 <template>
   <div id="today">
-    The temperature in <span id="city">{{ city }}</span> is {{ TodayTemperature }} °c
+    The temperature in <span id="city"> {{ city }} </span> is {{ todayTemperature }} °c
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   
   props: {
     city: String,
-    TodayTemperature: Number
+    todayTemperature: Number
   }
 }
 </script>
@@ -18,12 +18,15 @@ export default {
 <style>
 
 #today {
+  display: flex;
+  justify-content: center;
   padding: 20px;
 }
 
 #city {
   color: white;
   font-size: bold;
+  margin: 0 5px;
 }
 
 </style>

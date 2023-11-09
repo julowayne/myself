@@ -77,6 +77,7 @@ export default {
 
 .weatherIcon {
   width: 50%;
+  margin-top: 5px;
 }
 
 </style>

@@ -3,8 +3,13 @@
     <div class="weather">
       <h1 class="weather-title">Weather</h1>
       <!-- <WeatherSearch /> -->
-      <WeatherToday :TodayTemperature="TodayTemperature" :city="city" />
-      <WeatherForecast :weathers="weathers" />
+      <div v-if="todayTemperature">
+        <WeatherToday :todayTemperature="todayTemperature" :city="city" />
+        <WeatherForecast :weathers="weathers" />
+      </div>
+    </div>
+    <div v-if="geolocationDenied">
+      <ErrorMessages :message="geolocationDenied"/>
     </div>
   </div>
 </template>
@@ -13,6 +18,7 @@
 import axios from 'axios'
 import WeatherToday from './weather/WeatherToday.vue'
 import WeatherForecast from './weather/WeatherForecast.vue'
+import ErrorMessages from './weather/ErrorMessages.vue'
 // import WeatherSearch from './weather/WeatherSearch.vue'
 
 
@@ -22,19 +28,20 @@ export default {
 
   components: {
     WeatherToday,
-    WeatherForecast
-    // WeatherSearch
-  },
+    WeatherForecast,
+    ErrorMessages
+  // WeatherSearch
+},
 
   data: () => ({
-    OwApiKey: import.meta.env.VITE_OW_API_KEY,
-    OaiApiKey: import.meta.env.VITE_OAI_API_KEY,
+    owApiKey: import.meta.env.VITE_OW_API_KEY,
     city: '',
-    TodayTemperature: null,
+    todayTemperature: null,
     latitude: null,
     longitude: null,
     weathers: [],
-    weatherBackground: ''
+    weatherBackground: '',
+    geolocationDenied: ""
   }),
 
   methods: {
@@ -55,8 +62,9 @@ export default {
         this.getWeatherData()
       }
 
-      function error(err) {
+      const error = (err) => {
         console.warn(`ERROR (${err.code}): ${err.message}`)
+        this.geolocationDenied = `You have to accept geolocation to show the weather \nCheck your navigator settings to accept`
       }
 
       navigator.geolocation.getCurrentPosition(success, error, options)
@@ -65,12 +73,12 @@ export default {
     getWeatherData() {
       axios
         .get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${this.latitude}&lon=${this.longitude}&appid=${this.OwApiKey}&units=metric`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${this.latitude}&lon=${this.longitude}&appid=${this.owApiKey}&units=metric`
         )
         .then((resp) => {
           console.log(resp)
           this.city = resp.data.city.name
-          this.TodayTemperature = Math.round(resp.data.list[0].main.temp)
+          this.todayTemperature = Math.round(resp.data.list[0].main.temp)
           this.weathers = [
             {
               day: resp.data.list[7].dt_txt,
