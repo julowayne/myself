@@ -1,32 +1,79 @@
 <template>
-  <div id="today">
-    The temperature in <span id="city"> {{ city }} </span> is {{ todayTemperature }} °c
+  <div class="weatherToday" @click="showDetails">
+    <div id="today">
+      <div>
+        {{ getDay }} - {{ getHour }}
+      </div>
+      <div>
+        {{ city }}  {{ todayTemperature }} °c
+      </div>
+    </div>
+  </div>
+  <div v-if="showWeatherDetails === true">
+    <WeatherDayDetails/>
   </div>
 </template>
 
 <script>
+
+import dayjs from 'dayjs';
+import WeatherDayDetails from './WeatherDayDetails.vue';
+
 export default {
-  name: 'WeatherToday',
-  
-  props: {
-    city: String,
-    todayTemperature: Number
-  }
+    name: 'WeatherToday',
+    components: { WeatherDayDetails },
+    data: () => ({
+      showWeatherDetails: false
+    }),
+    props: {
+        city: String,
+        hour: String,
+        todayTemperature: Number
+    },
+    methods: {
+      showDetails(){
+        if(this.showWeatherDetails === false) {
+          this.showWeatherDetails = true
+        } else {
+          this.showWeatherDetails = false
+        }
+      }
+    },
+    computed: {
+        getDay() {
+            return dayjs(this.hour).format("MMMM DD");
+        },
+        getHour() {
+            return dayjs().hour(12).format("hh:mm a");
+        },
+    },
 }
 </script>
 
 <style>
+.weatherToday {
+  display: flex;
+  justify-content: center;
+  height: 80px;
+}
 
 #today {
   display: flex;
-  justify-content: center;
-  padding: 20px;
-}
-
-#city {
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 350px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #2c3e50;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
   color: white;
   font-size: bold;
-  margin: 0 5px;
+  cursor: pointer;
+}
+
+#today:hover {
+  background-color: #17a2b8;
 }
 
 </style>

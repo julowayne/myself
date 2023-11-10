@@ -71,7 +71,6 @@ export default {
 } 
 
 #img {
-  /* margin-top: 2px; */
   text-align: center;
 }
 

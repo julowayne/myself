@@ -33,8 +33,6 @@ export default {
 #forecast {
   display: flex;
   flex-flow: column;
-  height: 45vh;
-  width: 50vw;
   padding: 20px;
   justify-content: center;
   align-items: center;

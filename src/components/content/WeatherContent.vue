@@ -3,8 +3,8 @@
     <div class="weather">
       <h1 class="weather-title">Weather</h1>
       <!-- <WeatherSearch /> -->
-      <div v-if="todayTemperature">
-        <WeatherToday :todayTemperature="todayTemperature" :city="city" />
+      <div v-if="todayTemperature" class="container">
+        <WeatherToday :todayTemperature="todayTemperature" :city="city" :hour="hour" />
         <WeatherForecast :weathers="weathers" />
       </div>
     </div>
@@ -36,6 +36,7 @@ export default {
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,
     city: '',
+    hour: '',
     todayTemperature: null,
     latitude: null,
     longitude: null,
@@ -79,6 +80,7 @@ export default {
           console.log(resp)
           this.city = resp.data.city.name
           this.todayTemperature = Math.round(resp.data.list[0].main.temp)
+          this.hour = resp.data.list[0].dt_txt
           this.weathers = [
             {
               day: resp.data.list[7].dt_txt,
@@ -128,5 +130,12 @@ export default {
   justify-content: center;
   align-items: center;
   align-content: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 350px;
 }
 </style>
