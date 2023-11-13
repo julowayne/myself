@@ -9,19 +9,20 @@
       </div>
     </div>
     <div v-if="geolocationDenied">
-      <ErrorMessages :message="geolocationDenied"/>
+      <ErrorMessages :message="geolocationDenied" />
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import { WeatherApi } from '../services/weather.js'
 import WeatherToday from './weather/WeatherToday.vue'
 import WeatherForecast from './weather/WeatherForecast.vue'
 import ErrorMessages from './weather/ErrorMessages.vue'
 // import WeatherSearch from './weather/WeatherSearch.vue'
 
-
+const weatherApi = new WeatherApi()
 
 export default {
   name: 'WeatherContent',
@@ -30,8 +31,8 @@ export default {
     WeatherToday,
     WeatherForecast,
     ErrorMessages
-  // WeatherSearch
-},
+    // WeatherSearch
+  },
 
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,
@@ -42,12 +43,11 @@ export default {
     longitude: null,
     weathers: [],
     weatherBackground: '',
-    geolocationDenied: ""
+    geolocationDenied: ''
   }),
 
   methods: {
     getUserPosition() {
-
       const options = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -55,7 +55,6 @@ export default {
       }
 
       const success = (pos) => {
-
         const crd = pos.coords
         this.latitude = crd.latitude
         this.longitude = crd.longitude
@@ -71,47 +70,29 @@ export default {
       navigator.geolocation.getCurrentPosition(success, error, options)
     },
 
-    getWeatherData() {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${this.latitude}&lon=${this.longitude}&appid=${this.owApiKey}&units=metric`
-        )
-        .then((resp) => {
-          console.log(resp)
-          this.city = resp.data.city.name
-          this.todayTemperature = Math.round(resp.data.list[0].main.temp)
-          this.hour = resp.data.list[0].dt_txt
-          this.weathers = [
-            {
-              day: resp.data.list[7].dt_txt,
-              temperature: Math.round(resp.data.list[7].main.temp_max),
-              weatherCondition: resp.data.list[7].weather[0].main
-            },
-            {
-              day: resp.data.list[15].dt_txt,
-              temperature: Math.round(resp.data.list[15].main.temp_max),
-              weatherCondition: resp.data.list[15].weather[0].main
-            },
-            {
-              day: resp.data.list[23].dt_txt,
-              temperature: Math.round(resp.data.list[23].main.temp_max),
-              weatherCondition: resp.data.list[23].weather[0].main
-            },
-            {
-              day: resp.data.list[31].dt_txt,
-              temperature: Math.round(resp.data.list[31].main.temp_max),
-              weatherCondition: resp.data.list[31].weather[0].main
-            },
-            {
-              day: resp.data.list[39].dt_txt,
-              temperature: Math.round(resp.data.list[39].main.temp_max),
-              weatherCondition: resp.data.list[39].weather[0].main
-            },
-          ]
-        })
+    async getWeatherData() {
+      const weather = await weatherApi.get(
+        `forecast?lat=${this.latitude}&lon=${this.longitude}&appid=${this.owApiKey}&units=metric`
+      )
+
+      this.city = weather.data.city.name
+      this.todayTemperature = Math.round(weather.data.list[0].main.temp)
+      this.hour = weather.data.list[0].dt_txt
+      this.weathers = this.getDaysData(weather.data.list)
     },
+
+    getDaysData(weatherList){
+      const forecastDays = [7, 15, 23, 31, 39]
+      const data = forecastDays.map(forecastDay => ({
+        day: weatherList[forecastDay].dt_txt,
+        temperature: Math.round(weatherList[forecastDay].main.temp_max),
+        weatherCondition: weatherList[forecastDay].weather[0].main
+      }))
+    
+      return data
+    }
   },
-  
+
   created() {
     this.getUserPosition()
   }
