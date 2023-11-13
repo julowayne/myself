@@ -2,7 +2,6 @@
   <div class="content-padding">
     <div class="weather">
       <h1 class="weather-title">Weather</h1>
-      <!-- <WeatherSearch /> -->
       <div v-if="todayTemperature" class="container">
         <WeatherToday :todayTemperature="todayTemperature" :city="city" :hour="hour" />
         <WeatherForecast :weathers="weathers" />
@@ -15,13 +14,10 @@
 </template>
 
 <script>
-// import axios from 'axios'
 import { WeatherApi } from '../services/weather.js'
 import WeatherToday from './weather/WeatherToday.vue'
 import WeatherForecast from './weather/WeatherForecast.vue'
 import ErrorMessages from './weather/ErrorMessages.vue'
-// import WeatherSearch from './weather/WeatherSearch.vue'
-
 
 export default {
   name: 'WeatherContent',
@@ -30,7 +26,6 @@ export default {
     WeatherToday,
     WeatherForecast,
     ErrorMessages
-    // WeatherSearch
   },
 
   data: () => ({
@@ -70,15 +65,11 @@ export default {
     },
 
     async getWeatherData() {
-      // const weather = await weatherApi.get(
-      //   `forecast?lat=${this.latitude}&lon=${this.longitude}&appid=${this.owApiKey}&units=metric`
-      // )
 
-      const weatherApi = new WeatherApi()
-
-      const weather = await weatherApi.get('forecast', {
+      // Faire la gestion d'erreur des status HTTP
+      const weather = await WeatherApi.get('forecast', {
         lat: this.latitude,
-        long: this.longitude,
+        lon: this.longitude,
         appid: this.owApiKey,
         units: 'metric'
       })

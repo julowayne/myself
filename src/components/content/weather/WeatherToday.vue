@@ -26,6 +26,7 @@ export default {
     todayTemperature: Number
   },
   methods: {
+    // TODO : refacto
     showDetails() {
       if (this.showWeatherDetails === false) {
         this.showWeatherDetails = true
