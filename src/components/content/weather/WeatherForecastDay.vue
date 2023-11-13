@@ -6,7 +6,7 @@
       </span>
       <span> {{ weather.temperature }} ° </span>
       <span id="img">
-        <img class="weatherIcon" v-if="weather" :src="weatherImages" alt="weather image" />
+        <img class="weather-icon" v-if="weather" :src="weatherImages" alt="weather image" />
       </span>
     </div>
   </div>
@@ -61,7 +61,7 @@ export default {
   text-align: center;
 }
 
-.weatherIcon {
+.weather-icon {
   width: 50%;
   margin-top: 5px;
 }

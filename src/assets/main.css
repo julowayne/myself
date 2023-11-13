@@ -30,7 +30,6 @@ router-link,
 }
 
 @media (min-width: 1024px) {
-
   #app {
     display: flex;
     grid-template-columns: 1fr 1fr;

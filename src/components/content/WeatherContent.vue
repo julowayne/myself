@@ -22,7 +22,6 @@ import WeatherForecast from './weather/WeatherForecast.vue'
 import ErrorMessages from './weather/ErrorMessages.vue'
 // import WeatherSearch from './weather/WeatherSearch.vue'
 
-const weatherApi = new WeatherApi()
 
 export default {
   name: 'WeatherContent',
@@ -71,9 +70,18 @@ export default {
     },
 
     async getWeatherData() {
-      const weather = await weatherApi.get(
-        `forecast?lat=${this.latitude}&lon=${this.longitude}&appid=${this.owApiKey}&units=metric`
-      )
+      // const weather = await weatherApi.get(
+      //   `forecast?lat=${this.latitude}&lon=${this.longitude}&appid=${this.owApiKey}&units=metric`
+      // )
+
+      const weatherApi = new WeatherApi()
+
+      const weather = await weatherApi.get('forecast', {
+        lat: this.latitude,
+        long: this.longitude,
+        appid: this.owApiKey,
+        units: 'metric'
+      })
 
       this.city = weather.data.city.name
       this.todayTemperature = Math.round(weather.data.list[0].main.temp)
@@ -81,14 +89,14 @@ export default {
       this.weathers = this.getDaysData(weather.data.list)
     },
 
-    getDaysData(weatherList){
+    getDaysData(weatherList) {
       const forecastDays = [7, 15, 23, 31, 39]
-      const data = forecastDays.map(forecastDay => ({
+      const data = forecastDays.map((forecastDay) => ({
         day: weatherList[forecastDay].dt_txt,
         temperature: Math.round(weatherList[forecastDay].main.temp_max),
         weatherCondition: weatherList[forecastDay].weather[0].main
       }))
-    
+
       return data
     }
   },

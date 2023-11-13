@@ -1,6 +1,6 @@
 <template>
   <div id="forecast">
-    <h3 id="nextdays">Next Days</h3>
+    <h3 id="next-days">Next Days</h3>
     <WeatherForecastDay v-for="(weather, index) in weathers" :key="index" :weather="weather" />
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
   color: #e9ecef;
 }
 
-#nextdays {
+#next-days {
   margin-bottom: 15px;
 }
 </style>
