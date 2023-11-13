@@ -1,52 +1,47 @@
 <template>
   <div class="weatherToday" @click="showDetails">
     <div id="today">
-      <div>
-        {{ getDay }} - {{ getHour }}
-      </div>
-      <div>
-        {{ city }}  {{ todayTemperature }} °c
-      </div>
+      <div>{{ getDay }} - {{ getHour }}</div>
+      <div>{{ city }} {{ todayTemperature }} °c</div>
     </div>
   </div>
   <div v-if="showWeatherDetails === true">
-    <WeatherDayDetails/>
+    <WeatherDayDetails />
   </div>
 </template>
 
 <script>
-
-import dayjs from 'dayjs';
-import WeatherDayDetails from './WeatherDayDetails.vue';
+import dayjs from 'dayjs'
+import WeatherDayDetails from './WeatherDayDetails.vue'
 
 export default {
-    name: 'WeatherToday',
-    components: { WeatherDayDetails },
-    data: () => ({
-      showWeatherDetails: false
-    }),
-    props: {
-        city: String,
-        hour: String,
-        todayTemperature: Number
-    },
-    methods: {
-      showDetails(){
-        if(this.showWeatherDetails === false) {
-          this.showWeatherDetails = true
-        } else {
-          this.showWeatherDetails = false
-        }
+  name: 'WeatherToday',
+  components: { WeatherDayDetails },
+  data: () => ({
+    showWeatherDetails: false
+  }),
+  props: {
+    city: String,
+    hour: String,
+    todayTemperature: Number
+  },
+  methods: {
+    showDetails() {
+      if (this.showWeatherDetails === false) {
+        this.showWeatherDetails = true
+      } else {
+        this.showWeatherDetails = false
       }
+    }
+  },
+  computed: {
+    getDay() {
+      return dayjs(this.hour).format('MMMM DD')
     },
-    computed: {
-        getDay() {
-            return dayjs(this.hour).format("MMMM DD");
-        },
-        getHour() {
-            return dayjs().hour(12).format("hh:mm a");
-        },
-    },
+    getHour() {
+      return dayjs().hour(12).format('hh:mm a')
+    }
+  }
 }
 </script>
 
@@ -66,7 +61,7 @@ export default {
   padding: 10px;
   border-radius: 4px;
   background-color: #2c3e50;
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   color: white;
   font-size: bold;
   cursor: pointer;
@@ -75,5 +70,4 @@ export default {
 #today:hover {
   background-color: #17a2b8;
 }
-
 </style>

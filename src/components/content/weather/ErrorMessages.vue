@@ -5,25 +5,20 @@
 </template>
 
 <script>
-
 export default {
+  name: 'ErrorMessages',
 
- name: "ErrorMessages",
-
- props: {
-  message: String
-  },
+  props: {
+    message: String
+  }
 }
-
 </script>
 
 <style>
-
 .error {
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: pre-wrap;
 }
-
 </style>

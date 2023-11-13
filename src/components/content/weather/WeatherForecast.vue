@@ -1,35 +1,27 @@
 <template>
   <div id="forecast">
     <h3 id="nextdays">Next Days</h3>
-    <WeatherForecastDay 
-      v-for="(weather, index) in weathers"
-        :key="index"
-        :weather="weather"
-      />
+    <WeatherForecastDay v-for="(weather, index) in weathers" :key="index" :weather="weather" />
   </div>
 </template>
 
 <script>
-import WeatherForecastDay from './WeatherForecastDay.vue';
+import WeatherForecastDay from './WeatherForecastDay.vue'
 
 export default {
+  name: 'WeatherForecast',
 
- name: "WeatherForecast",
-
- components: {
+  components: {
     WeatherForecastDay
   },
 
- props: {
+  props: {
     weathers: Array
-  } 
-
+  }
 }
-
 </script>
 
 <style>
-
 #forecast {
   display: flex;
   flex-flow: column;
@@ -42,5 +34,4 @@ export default {
 #nextdays {
   margin-bottom: 15px;
 }
-
 </style>

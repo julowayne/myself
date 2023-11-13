@@ -22,7 +22,7 @@ export default {
   name: 'WeatherSearch',
 
   data: () => ({
-    OwApiKey: import.meta.env.VITE_OW_API_KEY,
+    owApiKey: import.meta.env.VITE_OW_API_KEY,
     searchCity: {
       name: '',
       temperature: null
@@ -34,7 +34,7 @@ export default {
     getWeatherByCity() {
       axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.searchCity.name}&appid=${this.OwApiKey}&units=metric`
+          `https://api.openweathermap.org/data/2.5/weather?q=${this.searchCity.name}&appid=${this.owApiKey}&units=metric`
         )
         .then((resp) => {
           this.searchCity.name = resp.data.name
@@ -44,32 +44,40 @@ export default {
           if (error.response) {
             if (error.response.status === 400)
               this.errorMsg = "The city you are looking for doesn't exist"
-          } 
+          }
           // else if (error.request) {
           //   console.log(error.request)
           // } else {
-            // Something happened in setting up the request that triggered an Error
+          // Something happened in setting up the request that triggered an Error
           //   console.log('Error', error.message)
           // }
           // console.log(error.config)
         })
+    },
+
+    async getWeatherByCity2() {
+      try {
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${this.searchCity.name}&appid=${this.owApiKey}&units=metric`
+        )
+
+        this.searchCity.name = response.data.name
+        this.searchCity.temperature = Math.round(response.data.main.temp)
+      } catch (error) {
+        if (error.response) {
+          if (error.response.status === 400)
+            this.errorMsg = "The city you are looking for doesn't exist"
+        }
+      }
     }
   },
 
-  // computed: {
-  //   hasSearchResult() {
-  //     if (this.searchCity.name) return true
-  //     return false
-  //   }
-  // },
-
   watch: {
-    "searchCity.name"(){
-      if(this.searchCity.name === "") this.searchCity.temperature = null
+    'searchCity.name'() {
+      if (this.searchCity.name === '') this.searchCity.temperature = null
     }
   }
 }
 </script>
 
-<style>
-</style>
+<style></style>
