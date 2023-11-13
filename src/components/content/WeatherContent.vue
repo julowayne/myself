@@ -99,7 +99,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .weather-title {
   color: #e9ecef;
   padding: 10px;
