@@ -89,9 +89,8 @@ export default {
         .get(
           `https://${this.region}.api.blizzard.com/profile/wow/character/${this.realm}/${this.character}/statistics?namespace=${this.namespace}&locale=${this.locale}&access_token=${this.token}`
         )
-        .then((resp) => {
+        .then(() => {
           // TODO
-          // this.statistics = ""
         })
     },
     getCharacterBasicInformations() {
@@ -99,8 +98,8 @@ export default {
         .get(
           `https://${this.region}.api.blizzard.com/profile/wow/character/${this.realm}/${this.character}?namespace=${this.namespace}&locale=${this.locale}&access_token=${this.token}`
         )
-        .then((resp) => {
-          // this.statistics = ""
+        .then(() => {
+          // TODO
         })
     },
 
