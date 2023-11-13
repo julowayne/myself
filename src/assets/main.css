@@ -20,10 +20,11 @@ router-link,
   font-size: x-large;
   font-weight: bolder;
   color: lightgreen;
- }
+}
 
 @media (hover: hover) {
-  a:hover, router-link:hover {
+  a:hover,
+  router-link:hover {
     color: lightgrey;
   }
 }

@@ -38,17 +38,17 @@ import SupportIcon from '../icons/IconSupport.vue'
 </script>
 
 <style scoped>
-
 ul {
   padding: 0;
 }
 li {
   list-style-type: none;
   padding: 20px;
-  border-bottom: 1.5px solid lightgrey; 
+  border-bottom: 1.5px solid lightgrey;
 }
 
-a,router-link {
+a,
+router-link {
   font-size: x-large;
   font-weight: bolder;
   margin-left: 10px;
