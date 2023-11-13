@@ -91,7 +91,6 @@ export default {
         )
         .then((resp) => {
           // TODO
-          console.log(resp.data)
           // this.statistics = ""
         })
     },
@@ -101,8 +100,6 @@ export default {
           `https://${this.region}.api.blizzard.com/profile/wow/character/${this.realm}/${this.character}?namespace=${this.namespace}&locale=${this.locale}&access_token=${this.token}`
         )
         .then((resp) => {
-          // TODO
-          console.log(resp.data)
           // this.statistics = ""
         })
     },
