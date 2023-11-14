@@ -7,7 +7,7 @@
         <WeatherForecast :weathers="weathers" />
       </div>
     </div>
-    <div v-if="errors">
+    <div v-if="errors.lenght">
       <ErrorMessages :errors="errors" />
     </div>
   </div>
@@ -71,7 +71,7 @@ export default {
 
       const weather =  await WeatherApi.get('forecast', {
         lat: this.latitude,
-        long: this.longitude,
+        lon: this.longitude,
         appid: this.owApiKey,
         units: 'metric'
       })
@@ -85,10 +85,10 @@ export default {
           message: "Error 401: Unauthorized request"
         }]
       } else {
-        this.city = weather.data.city.name
-        this.todayTemperature = Math.round(weather.data.list[0].main.temp)
-        this.hour = weather.data.list[0].dt_txt
-        this.weathers = this.getDaysData(weather.data.list)
+        this.city = weather.city.name
+        this.todayTemperature = Math.round(weather.list[0].main.temp)
+        this.hour = weather.list[0].dt_txt
+        this.weathers = this.getDaysData(weather.list)
       }
 
     },
