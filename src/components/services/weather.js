@@ -6,11 +6,14 @@ export class WeatherApi {
     baseURL: 'https://api.openweathermap.org/data/2.5/'
   })
 
-  static get(path, params = {}) {
+  static async get(path, params = {}) {
     try {
-      return this.instance.get(path, { params })
+      const response = await this.instance.get(path, { params })
+      return response.data
     } catch (error) {
-      return error
+      if (error.response) {
+        return error.response.status
+      }
     }
   }
 }

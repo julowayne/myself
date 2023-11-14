@@ -2,13 +2,13 @@
   <div class="content-padding">
     <div class="weather">
       <h1 class="weather-title">Weather</h1>
-      <div v-if="todayTemperature" class="container">
+      <div v-if="todayTemperature && !errors.length" class="container">
         <WeatherToday :todayTemperature="todayTemperature" :city="city" :hour="hour" />
         <WeatherForecast :weathers="weathers" />
       </div>
     </div>
-    <div v-if="geolocationDenied">
-      <ErrorMessages :message="geolocationDenied" />
+    <div v-if="errors">
+      <ErrorMessages :errors="errors" />
     </div>
   </div>
 </template>
@@ -37,7 +37,8 @@ export default {
     longitude: null,
     weathers: [],
     weatherBackground: '',
-    geolocationDenied: ''
+    geolocationDenied: '',
+    errors: []
   }),
 
   methods: {
@@ -58,7 +59,9 @@ export default {
 
       const error = (err) => {
         console.warn(`ERROR (${err.code}): ${err.message}`)
-        this.geolocationDenied = `You have to accept geolocation to show the weather \nCheck your navigator settings to accept`
+        this.errors = [{
+          message: "You have to accept geolocation to show the weather \nCheck your navigator settings to accept"
+        }]
       }
 
       navigator.geolocation.getCurrentPosition(success, error, options)
@@ -66,18 +69,28 @@ export default {
 
     async getWeatherData() {
 
-      // Faire la gestion d'erreur des status HTTP
-      const weather = await WeatherApi.get('forecast', {
+      const weather =  await WeatherApi.get('forecast', {
         lat: this.latitude,
-        lon: this.longitude,
+        long: this.longitude,
         appid: this.owApiKey,
         units: 'metric'
       })
+      console.log(weather)
+      if(weather === 400){
+        this.errors = [{
+          message: "Error 400: Bad request"
+        }]
+      }else if(weather === 401) {
+        this.errors = [{
+          message: "Error 401: Unauthorized request"
+        }]
+      } else {
+        this.city = weather.data.city.name
+        this.todayTemperature = Math.round(weather.data.list[0].main.temp)
+        this.hour = weather.data.list[0].dt_txt
+        this.weathers = this.getDaysData(weather.data.list)
+      }
 
-      this.city = weather.data.city.name
-      this.todayTemperature = Math.round(weather.data.list[0].main.temp)
-      this.hour = weather.data.list[0].dt_txt
-      this.weathers = this.getDaysData(weather.data.list)
     },
 
     getDaysData(weatherList) {
