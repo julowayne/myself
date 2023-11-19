@@ -7,7 +7,7 @@
         <WeatherForecast :weathers="weathers" />
       </div>
     </div>
-    <div v-if="errors.lenght">
+    <div v-if="errors.length">
       <ErrorMessages :errors="errors" />
     </div>
   </div>
@@ -110,7 +110,7 @@ export default {
         weatherCondition: hour.weather[0].main
       }))
 
-      console.log(dayDetails)
+      return dayDetails
     },
 
     getDaysData(weatherList) {

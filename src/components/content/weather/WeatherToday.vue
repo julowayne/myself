@@ -29,7 +29,6 @@ export default {
   methods: {
     showDetails() {
       this.showWeatherDetails = !this.showWeatherDetails
-      console.log(this.showWeatherDetails)
     }
   },
   computed: {

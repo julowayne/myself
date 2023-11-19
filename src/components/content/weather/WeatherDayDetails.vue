@@ -12,7 +12,7 @@ export default {
     props: {
         weatherTodayDetails: Array
     },
-    components: { WeatherTodayDetails }
+    components: { WeatherTodayDetails },
 }
 </script>
 
