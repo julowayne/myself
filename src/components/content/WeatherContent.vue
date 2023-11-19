@@ -3,7 +3,7 @@
     <div class="weather">
       <h1 class="weather-title">Weather</h1>
       <div v-if="todayTemperature && !errors.length" class="container">
-        <WeatherToday :todayTemperature="todayTemperature" :city="city" :hour="hour" />
+        <WeatherToday :todayTemperature="todayTemperature" :city="city" :hour="hour" :weatherTodayDetails="weatherTodayDetails" />
         <WeatherForecast :weathers="weathers" />
       </div>
     </div>
@@ -36,6 +36,7 @@ export default {
     latitude: null,
     longitude: null,
     weathers: [],
+    weatherTodayDetails: [],
     weatherBackground: '',
     geolocationDenied: '',
     errors: []
@@ -59,38 +60,57 @@ export default {
 
       const error = (err) => {
         console.warn(`ERROR (${err.code}): ${err.message}`)
-        this.errors = [{
-          message: "You have to accept geolocation to show the weather \nCheck your navigator settings to accept"
-        }]
+        this.errors = [
+          {
+            message:
+              'You have to accept geolocation to show the weather \nCheck your navigator settings to accept'
+          }
+        ]
       }
 
       navigator.geolocation.getCurrentPosition(success, error, options)
     },
 
     async getWeatherData() {
-
-      const weather =  await WeatherApi.get('forecast', {
+      const weather = await WeatherApi.get('forecast', {
         lat: this.latitude,
         lon: this.longitude,
         appid: this.owApiKey,
         units: 'metric'
       })
       console.log(weather)
-      if(weather === 400){
-        this.errors = [{
-          message: "Error 400: Bad request"
-        }]
-      }else if(weather === 401) {
-        this.errors = [{
-          message: "Error 401: Unauthorized request"
-        }]
+      if (weather === 400) {
+        this.errors = [
+          {
+            message: 'Error 400: Bad request'
+          }
+        ]
+      } else if (weather === 401) {
+        this.errors = [
+          {
+            message: 'Error 401: Unauthorized request'
+          }
+        ]
       } else {
         this.city = weather.city.name
         this.todayTemperature = Math.round(weather.list[0].main.temp)
         this.hour = weather.list[0].dt_txt
         this.weathers = this.getDaysData(weather.list)
+        this.weatherTodayDetails = this.getTodayDetailsData(weather.list)
       }
+    },
 
+    getTodayDetailsData(weatherListDetails){
+      // TODO afficher les détails des 24 prochaines heures
+      const nextHours = weatherListDetails.slice(0, 9)
+
+      const dayDetails = nextHours.map((hour) => ({
+        day: hour.dt_txt,
+        temperature: Math.round(hour.main.temp_max),
+        weatherCondition: hour.weather[0].main
+      }))
+
+      console.log(dayDetails)
     },
 
     getDaysData(weatherList) {

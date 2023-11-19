@@ -45,10 +45,6 @@ export default {
             if (error.response.status === 400)
               this.errorMsg = "The city you are looking for doesn't exist"
           }
-          // else if (error.request) {
-          // } else {
-          // Something happened in setting up the request that triggered an Error
-          // }
         })
     },
 

@@ -6,7 +6,7 @@
     </div>
   </div>
   <div v-if="showWeatherDetails === true">
-    <WeatherDayDetails />
+    <WeatherDayDetails :weatherTodayDetails="weatherTodayDetails"/>
   </div>
 </template>
 
@@ -23,16 +23,13 @@ export default {
   props: {
     city: String,
     hour: String,
-    todayTemperature: Number
+    todayTemperature: Number,
+    weatherTodayDetails: Array
   },
   methods: {
-    // TODO : refacto
     showDetails() {
-      if (this.showWeatherDetails === false) {
-        this.showWeatherDetails = true
-      } else {
-        this.showWeatherDetails = false
-      }
+      this.showWeatherDetails = !this.showWeatherDetails
+      console.log(this.showWeatherDetails)
     }
   },
   computed: {

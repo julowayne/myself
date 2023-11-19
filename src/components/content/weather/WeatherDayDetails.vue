@@ -1,15 +1,18 @@
 <template>
   <div>
-    <div class="details">yoyoyoyoyo</div>
+    <WeatherTodayDetails v-for="(weatherToday, index) in weatherTodayDetails" :key="index" :weatherToday="weatherToday"/>
   </div>
 </template>
 
 <script>
+import WeatherTodayDetails from './WeatherTodayDetails.vue';
 
 export default {
-  name: 'WeatherDayDetails',
-
-  props: {}
+    name: "WeatherDayDetails",
+    props: {
+        weatherTodayDetails: Array
+    },
+    components: { WeatherTodayDetails }
 }
 </script>
 

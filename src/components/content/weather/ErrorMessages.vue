@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="error">
-      <font-awesome-icon icon="fa-solid fa-circle-exclamation" id="icon" /> 
+      <font-awesome-icon icon="fa-solid fa-circle-exclamation" id="icon" />
       {{ errors[0].message }}
     </div>
   </div>

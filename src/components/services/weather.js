@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 export class WeatherApi {
-  
   static instance = axios.create({
     baseURL: 'https://api.openweathermap.org/data/2.5/'
   })
